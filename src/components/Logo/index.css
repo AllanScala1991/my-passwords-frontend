@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "luckiest";
+    src: url(../../../public//fonts/LuckiestGuy-Regular.ttf);
+}
+
+.logoTitle {
+    font-family: "luckiest";
+    font-size: 3vh;
+}
+
+.logoImage {
+    padding-left: 3vh;
+}
+
+.logoContainer {
+    width: 100%;
+    height: 20vh;
+    padding-top: 8vh;
+    padding-bottom: 1vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
