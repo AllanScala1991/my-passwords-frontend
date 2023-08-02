@@ -4,6 +4,7 @@ interface InputProps {
     placeholder: string
     fontSize: number
     type: string
+    onChange: (value: string) => void
 }
 
 export function Input(props: InputProps) {
@@ -14,6 +15,7 @@ export function Input(props: InputProps) {
                 className="inputs" 
                 placeholder={props.placeholder}
                 style={{fontSize:props.fontSize + "vh"}}
+                onChange={event => {props.onChange(event.target.value)}}
             />
         </div>
     )

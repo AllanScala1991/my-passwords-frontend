@@ -9,7 +9,7 @@
 }
 
 .inputs {
-    width: 13%;
+    width: 320px;
     height: 3.5vh;
     border: 0.3vh solid rgba(0,0,0,0.5);
     border-radius: 0.5vh;
