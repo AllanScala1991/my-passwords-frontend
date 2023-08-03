@@ -34,7 +34,7 @@ export function Login() {
         <div className="loginContainer">
             <ModalMessage 
                 isShow = {isShow}
-                title = "Dados Inválidos"
+                title = "Ops..."
                 onClose={() => setIsShow(false)}
                 message = {errorMessage}
             />
