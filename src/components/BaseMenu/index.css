@@ -1,0 +1,8 @@
+.baseMenuContainer {
+    width: 80%;
+    height: 5vh;
+    border-bottom: 0.3vh solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
