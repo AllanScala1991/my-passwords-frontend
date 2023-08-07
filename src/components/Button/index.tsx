@@ -5,6 +5,8 @@ interface ButtonProps {
     backgroundColor: string
     textColor: string
     onClick: () => void
+    width: number
+    height: number
 }
 
 export function Button(props: ButtonProps) {
@@ -12,7 +14,7 @@ export function Button(props: ButtonProps) {
         <div className="buttonsContainer">
             <button 
                 className="buttons"
-                style={{backgroundColor:props.backgroundColor, color: props.textColor}}
+                style={{backgroundColor:props.backgroundColor, color: props.textColor, width: `${props.width}px`, height: `${props.height}vh`}}
                 onClick={props.onClick}
             >{props.text}</button>
         </div>

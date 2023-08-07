@@ -1,6 +1,6 @@
 .baseMenuContainer {
     width: 80%;
-    height: 5vh;
+    height: 6vh;
     border-bottom: 0.3vh solid black;
     display: flex;
     flex-direction: row;

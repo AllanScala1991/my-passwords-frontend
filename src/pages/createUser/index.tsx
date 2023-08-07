@@ -83,6 +83,8 @@ export function CreateUser() {
                 textColor="#FFFFFF"
                 backgroundColor="#4CD195"
                 onClick={() => createUser()}
+                width={325}
+                height={3.5}
             />
         </div>
     )

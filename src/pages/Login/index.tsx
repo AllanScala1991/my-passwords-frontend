@@ -60,6 +60,8 @@ export function Login() {
                 textColor="#FFFFFF"
                 backgroundColor="#4CD195"
                 onClick={() => loginUser()}
+                width={325}
+                height={3.5}
             />
 
             <div className="linkContainer">

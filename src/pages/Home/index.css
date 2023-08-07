@@ -9,7 +9,7 @@
 
 .baseContainer {
     width: 80%;
-    height: 4vh;
+    height: 8vh;
     display: flex;
     flex-direction: row;
     justify-content: left;
@@ -22,13 +22,13 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
+    align-items: center;
     margin-top: 2vh;
-    background-color: blue;
 }
 
 .resultsContainer {
     width: 80%;
-    height: 75vh;
+    height: 72vh;
     display: flex;
     flex-direction: row;
     justify-content: left;
