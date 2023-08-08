@@ -21,17 +21,16 @@
     height: 10vh;
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     margin-top: 2vh;
 }
 
 .resultsContainer {
     width: 80%;
-    height: 72vh;
+    height: 500px;
     display: flex;
-    flex-direction: row;
-    justify-content: left;
+    flex-direction: column;
+    justify-content: start;
     margin-top: 2vh;
-    background-color: yellow;
 }

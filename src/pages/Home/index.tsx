@@ -1,17 +1,41 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { BaseMenu } from "../../components/BaseMenu";
 import { InputSearch } from "../../components/InputSearch";
 import { SmallLogo } from "../../components/SmallLogo";
 import "./index.css";
 import { searchByTitle } from "../../services/searchByTitle/searchByTitle.service";
+import { searchAllPasswordsByUserId } from "../../services/searchAllPasswordsByUserId/searchAllPasswordsByUserId.service";
+import { PasswordList } from "../../components/PasswordsList";
+import { AddIcon, Button as CreateButton } from "evergreen-ui";
+import { InputImage } from "../../components/InputImage";
+import { generate } from "../../services/generateRandomKey/generateRandomKey";
 
 export function Home() {
     const [passwords, setPasswords] = useState([]);
+    const [randomKey, setRandomKey] = useState("");
+
+    useEffect(() => {
+        const getAllPasswords = async () => {
+            const getPasswords = await searchAllPasswordsByUserId(`${window.localStorage.getItem('id')}`);
+
+            if(getPasswords.status != 200) setPasswords([])
+
+            setPasswords(getPasswords.data)
+        }
+
+        getAllPasswords()
+    }, [setPasswords])
 
     const getAllPasswordsByTitle = async (title: string) => {
         const allPasswords = await searchByTitle(title);
 
         setPasswords(allPasswords.data);
+    }
+
+    const generateRandomPassword = () => {
+        const randomPassword = generate();
+
+        setRandomKey(randomPassword)
     }
 
     return (
@@ -24,26 +48,47 @@ export function Home() {
             <div className="middleContainer">
                 <InputSearch 
                     placeholder="Busque o titulo..."
-                    width={350}
+                    width={450}
                     height={35}
                     onChange={async (e:ChangeEvent<HTMLInputElement>) => {
                         if (e.target.value) {
                             getAllPasswordsByTitle(e.target.value)
                         }
-                        // caso esteja em branco, ele tem que buscar todos os passwords pelo user id
+
+                        const getPasswords = await searchAllPasswordsByUserId(`${window.localStorage.getItem('id')}`);
+
+                        if(getPasswords.status != 200) setPasswords([])
+
+                        setPasswords(getPasswords.data);
                     }}
+                />
+
+                <CreateButton 
+                    iconBefore={AddIcon}
+                    marginLeft={30}
+                    onClick={() => {alert("Criar novo registro")}}
+                >NOVO REGISTRO</CreateButton>
+
+                <InputImage 
+                    value={randomKey}
+                    onClick={() => {generateRandomPassword()}}
                 />
                 
             </div>
 
             <div className="resultsContainer">
-                // ajustar o componente que vai mostrar as senhas e criar uma interface do password
                 {
                     passwords ?
-                        passwords.map((password: {id: string, title: string}) => {
-                            return <p key={password.id}>{password.title}</p>
-                        })
-                    : null
+                        <PasswordList 
+                            passwords={passwords}
+                            showPassword={() => {}}
+                        />
+                        
+                    : 
+                        <PasswordList 
+                            passwords={[]}
+                            showPassword={() => {}}
+                        />
                 }
             </div>
         </div>
