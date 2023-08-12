@@ -38,6 +38,14 @@ export function Home() {
         setRandomKey(randomPassword)
     }
 
+    const updatePasswordTable = async () => {
+        const getPasswords = await searchAllPasswordsByUserId(`${window.localStorage.getItem('id')}`);
+
+        if(getPasswords.status != 200) setPasswords([])
+
+        setPasswords(getPasswords.data)
+    }
+
     return (
         <div className="homeContainer">
             <div className="baseContainer">
@@ -47,7 +55,7 @@ export function Home() {
 
             <div className="middleContainer">
                 <InputSearch 
-                    placeholder="Busque o titulo..."
+                    placeholder="Faça uma busca pelo titulo..."
                     width={450}
                     height={35}
                     onChange={async (e:ChangeEvent<HTMLInputElement>) => {
@@ -81,13 +89,13 @@ export function Home() {
                     passwords ?
                         <PasswordList 
                             passwords={passwords}
-                            showPassword={() => {}}
+                            onUpdatePasswordTable={() => updatePasswordTable()}
                         />
                         
                     : 
                         <PasswordList 
                             passwords={[]}
-                            showPassword={() => {}}
+                            onUpdatePasswordTable={() => updatePasswordTable()}
                         />
                 }
             </div>
