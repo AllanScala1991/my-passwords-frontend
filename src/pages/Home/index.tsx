@@ -9,10 +9,19 @@ import { PasswordList } from "../../components/PasswordsList";
 import { AddIcon, Button as CreateButton } from "evergreen-ui";
 import { InputImage } from "../../components/InputImage";
 import { generate } from "../../services/generateRandomKey/generateRandomKey";
+import { ModalCreatePassword } from "../../components/ModalCreatePassword";
+import { createPassword } from "../../services/createPassword/createPassword.service";
+import { ModalMessage } from "../../components/ModalMessage";
 
 export function Home() {
     const [passwords, setPasswords] = useState([]);
     const [randomKey, setRandomKey] = useState("");
+    const [createPasswordShow, setCreatePasswordShow] = useState(false);
+    const [showMessageModal, setShowMessageModal] = useState(false);
+    const [messageModal, setMessageModal] = useState({
+        title: "",
+        message: ""
+    })
 
     useEffect(() => {
         const getAllPasswords = async () => {
@@ -46,8 +55,35 @@ export function Home() {
         setPasswords(getPasswords.data)
     }
 
+    const savePassword = async (title: string, username: string, password: string) => {
+        const response = await createPassword(title, username, password);
+    
+        if(response.status != 201) {
+            console.log("Entrou")
+            setShowMessageModal(true)
+            setMessageModal({title: "Ops...", message:response.message});
+            return
+        }
+
+        setShowMessageModal(true)
+        setMessageModal({title: "Sucesso!", message:"Registro criado com sucesso."})
+        updatePasswordTable();
+        setCreatePasswordShow(false);
+    }
+
     return (
         <div className="homeContainer">
+            <ModalCreatePassword 
+                isShown={createPasswordShow}
+                isClose={() => {setCreatePasswordShow(false)}}
+                onClick={(title: string, username: string, password: string) => savePassword(title, username, password)}
+            />
+            <ModalMessage 
+                isShow={showMessageModal}
+                onClose={() => {setShowMessageModal(false)}}
+                title={messageModal.title}
+                message={messageModal.message}
+            />
             <div className="baseContainer">
                 <SmallLogo />
                 <BaseMenu />
@@ -74,7 +110,7 @@ export function Home() {
                 <CreateButton 
                     iconBefore={AddIcon}
                     marginLeft={30}
-                    onClick={() => {alert("Criar novo registro")}}
+                    onClick={() => {setCreatePasswordShow(true)}}
                 >NOVO REGISTRO</CreateButton>
 
                 <InputImage 
