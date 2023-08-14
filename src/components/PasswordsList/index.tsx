@@ -46,7 +46,7 @@ export function PasswordList(props: PasswordListProps) {
     }
 
     const updatePassword = async (id: string, title: string, username: string, password: string) => {
-        const response = await updatePasswordById(id, title, username, password);
+        const response = await updatePasswordById({id, title, username, password});
 
         if(response.status != 200) {
             setMessageTitle("Ops...");

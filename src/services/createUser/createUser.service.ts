@@ -1,20 +1,20 @@
 
-interface CreateUserModel {
+interface ICreateUser {
     name: string
     email: string
     username: string
     password: string
 }
 
-export const createUserService = async (user: CreateUserModel) => {
+export const createUserService = async ({name, email, username, password}: ICreateUser) => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            name: user.name,
-            email: user.email,
-            username: user.username,
-            password: user.password
+            name,
+            email,
+            username,
+            password
         })
     };
 

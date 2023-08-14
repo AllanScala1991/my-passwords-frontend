@@ -13,7 +13,7 @@ export function InputImage(props: InputImageProps) {
                 readOnly={true}
                 label="Gerar senha aleatória"
                 placeholder="Ex: #Abc456bc*"
-                width={450}
+                width={350}
                 marginLeft={30}
                 value={props.value}
             />

@@ -1,6 +1,13 @@
 import { ResponseModel } from "../../models/response.model";
 
-export const updatePasswordById = async (id: string, title: string, username: string, password: string) => {
+interface IUpdatePassword {
+    id: string
+    title: string
+    username: string
+    password: string
+}
+
+export const updatePasswordById = async ({id, title, username, password}: IUpdatePassword) => {
     console.log(title, username, password)
     const requestOptions = {
         method: 'PUT',

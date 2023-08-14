@@ -15,7 +15,7 @@ export const searchAllPasswordsByUserId = async (userId: string): Promise<Respon
             window.location.href = "/";
         }
         
-        const response:ResponseModel = await passwords.json();
+        const response: Promise<ResponseModel> = await passwords.json();
     
         return response
 }

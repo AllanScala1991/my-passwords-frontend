@@ -1,5 +1,10 @@
+interface ICreatePassword {
+    title: string
+    username: string
+    password: string
+}
 
-export const createPassword = async (title: string, username: string, password: string) => {
+export const createPassword = async ({title, username, password}: ICreatePassword) => {
     const requestOptions = {
         method: 'POST',
         headers: { 

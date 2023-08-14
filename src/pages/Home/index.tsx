@@ -71,7 +71,7 @@ export function Home() {
 
     const savePassword = async (title: string, username: string, password: string) => {
         setLoadingShow(true);
-        const response = await createPassword(title, username, password);
+        const response = await createPassword({title, username, password});
     
         if(response.status != 201) {
             setLoadingShow(false)
