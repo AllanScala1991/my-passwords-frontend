@@ -6,6 +6,7 @@ import { Logo } from "../../components/Logo";
 import "./index.css";
 import { createUserService } from "../../services/createUser/createUser.service";
 import { ModalMessage } from "../../components/ModalMessage";
+import { Loading } from "../../components/Loading";
 
 export function CreateUser() {
 
@@ -16,8 +17,10 @@ export function CreateUser() {
     const [title, setTitle] = useState("");
     const [isShow, setIsShow] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [loadingShow, setLoadingShow] = useState(false);
 
     const createUser = async () => {
+        setLoadingShow(true)
         const response = await createUserService({
             name: name,
             email: email,
@@ -29,11 +32,13 @@ export function CreateUser() {
             setTitle("Ops...")
             setErrorMessage(response.message)
             setIsShow(true)
+            setLoadingShow(false)
             return
         }
         setTitle("Sucesso!!");
         setErrorMessage("Parabéns, seu usuário foi criado com sucesso.");
         setIsShow(true);
+        setLoadingShow(false)
         document.querySelectorAll("input").forEach((item) => {
             if(item) item.value = ""
         })
@@ -42,6 +47,12 @@ export function CreateUser() {
 
     return (
         <div className="createUserContainer">
+            {
+                loadingShow ?
+                    <Loading />
+                :
+                    null
+            }
             <ModalMessage 
                 isShow = {isShow}
                 title = {title}

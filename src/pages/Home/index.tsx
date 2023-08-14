@@ -12,6 +12,7 @@ import { generate } from "../../services/generateRandomKey/generateRandomKey";
 import { ModalCreatePassword } from "../../components/ModalCreatePassword";
 import { createPassword } from "../../services/createPassword/createPassword.service";
 import { ModalMessage } from "../../components/ModalMessage";
+import { Loading } from "../../components/Loading";
 
 export function Home() {
     const [passwords, setPasswords] = useState([]);
@@ -22,8 +23,11 @@ export function Home() {
         title: "",
         message: ""
     })
+    const [loadingShow, setLoadingShow] = useState(false);
 
     useEffect(() => {
+        setLoadingShow(true)
+
         const getAllPasswords = async () => {
             const getPasswords = await searchAllPasswordsByUserId(`${window.localStorage.getItem('id')}`);
 
@@ -33,33 +37,44 @@ export function Home() {
         }
 
         getAllPasswords()
+        setLoadingShow(false)
     }, [setPasswords])
 
     const getAllPasswordsByTitle = async (title: string) => {
+        setLoadingShow(true);
         const allPasswords = await searchByTitle(title);
 
         setPasswords(allPasswords.data);
+        setLoadingShow(false);
     }
 
     const generateRandomPassword = () => {
+        setLoadingShow(true);
         const randomPassword = generate();
 
         setRandomKey(randomPassword)
+        setLoadingShow(false);
     }
 
     const updatePasswordTable = async () => {
+        setLoadingShow(true);
         const getPasswords = await searchAllPasswordsByUserId(`${window.localStorage.getItem('id')}`);
 
-        if(getPasswords.status != 200) setPasswords([])
+        if(getPasswords.status != 200){
+            setPasswords([])
+            setLoadingShow(false);
+        }
 
         setPasswords(getPasswords.data)
+        setLoadingShow(false);
     }
 
     const savePassword = async (title: string, username: string, password: string) => {
+        setLoadingShow(true);
         const response = await createPassword(title, username, password);
     
         if(response.status != 201) {
-            console.log("Entrou")
+            setLoadingShow(false)
             setShowMessageModal(true)
             setMessageModal({title: "Ops...", message:response.message});
             return
@@ -69,10 +84,17 @@ export function Home() {
         setMessageModal({title: "Sucesso!", message:"Registro criado com sucesso."})
         updatePasswordTable();
         setCreatePasswordShow(false);
+        setLoadingShow(false);
     }
 
     return (
         <div className="homeContainer">
+            {
+                loadingShow ?
+                    <Loading />
+                :
+                    null
+            }
             <ModalCreatePassword 
                 isShown={createPasswordShow}
                 isClose={() => {setCreatePasswordShow(false)}}
