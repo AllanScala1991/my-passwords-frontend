@@ -34,7 +34,12 @@ export function PasswordList(props: PasswordListProps) {
     const decryptedPassword = async (passwordId: string) => {
         const response = await showPassword(passwordId);
 
-        if(response.status != 200) return "ERROR";
+        if(response.status != 200) {
+            setMessageTitle("Ops...");
+            setMessage(`Erro ao decriptar sua senha, contate o administrador.`);
+            setMessageVisible(true);
+            return
+        }
 
         return response.data.decriptedPassword;
     }
